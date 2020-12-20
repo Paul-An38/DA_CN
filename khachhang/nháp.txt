@@ -1,0 +1,38 @@
+<?php
+	include("../config/config.php");
+	function postdata($index,$value="")
+	{
+		if(!isset($_POST[$index])) return $value;
+		return trim($_POST[$index]);
+	}
+	$user=postdata('Username');
+	$pass=postdata('Password');
+    $pass=md5($pass);
+    echo $user;
+    echo $pass;
+			
+		$sql="select Usernames,Passwords From khachhang ";
+		$stm=$obj->prepare($sql);
+		$stm->execute();
+        $data=$stm->fetchALL(PDO::FETCH_ASSOC);
+        $arr=array();
+		foreach($data as $k => $v)
+		{
+           if($user==$v['Usernames'])
+           {
+               if($pass==$v['Passwords'])
+               {
+                   header('location:../index.php');
+               }
+               else{
+                   echo "mật khẩu đăng nhập không chính xác";exit;
+               } 
+           }
+           else
+           { 
+                echo "ten đăng nhập không chính xác";exit;
+           }
+        }
+	 
+?>
+<!-- Bài giấy  nháp  -->
